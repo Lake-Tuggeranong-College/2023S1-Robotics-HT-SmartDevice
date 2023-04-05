@@ -6,6 +6,27 @@
 
 ```mermaid
 flowchart TD
-    A-->B
+    Start([Doorbell])
+    getButtonStatus(Get Button Status)
+    checkButton{has button been pressed}
+    soundDoorbell(Play Sound)
+    finish([End])
+   
+   
+   
+    Start-->getButtonStatus-->checkButton
+    checkButton-->|Yes| soundDoorbell
+    checkButton-->|No| finish
+    soundDoorbell-->finish
 
+```
+
+## logic 2
+```mermaid
+flowchart TD
+    Start([Event])
+    
+
+
+start-->logEvent
 ```
