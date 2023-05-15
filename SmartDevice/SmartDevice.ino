@@ -8,7 +8,7 @@ RTC_Millis rtc;     // Software Real Time Clock (RTC)
 DateTime rightNow;  // used to store the current time.
 
 // SD Card - Confirm Pin
-#define SDpin 53
+#define SDpin 10
 
 void setup() {
   // put your setup code here, to run once:
@@ -28,4 +28,32 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  temperatureControl
+
+  delay(250);
 }
+/*
+controls the temperature in the house
+@params
+@return
+ */
+void temperatureControl(){ //air conditioning basically
+
+
+}
+/*
+ controls the light in the house
+ @params
+ @return
+*/
+void light(){
+  
+  }
+  /*
+   doorbell (ringing noise when crash button pressed)
+   @params
+   @return
+   */
+void doorbell(){
+  
+  }
