@@ -28,17 +28,17 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-temperatureControl
+temperatureControl();
 delay(250);
-light
+light();
 delay(250);
-doorbell
+doorbell();
 delay(250);
-eventLogger
+eventLogger();
 delay(250);
-doorLocker
+doorLocker();
 delay(250);
-security
+security();
 }
 /*
 controls the temperature in the house
