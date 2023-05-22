@@ -9,6 +9,27 @@ DateTime rightNow;  // used to store the current time.
 
 // SD Card - Confirm Pin
 #define SDpin 10
+// Traffic Lights - LED Outputs
+#define ledRed A0
+#define ledYellow A1
+#define ledGreen A2
+//dc motor DFRobot
+int E1 = 6;
+int M1 = 7;
+// Servo
+#include <Servo.h>
+Servo myservo;
+//Potentiometer
+#define pot A3
+// Piezo Buzzer
+#define piezoPin 8
+// Sonar - HC-SR04
+#define echoPin 6 // attach pin D2 Arduino to pin Echo of HC-SR04
+#define trigPin A4 //attach pin D3 Arduino to pin Trig of HC-SR04
+// Line Sensor
+#define lineSensorPin 3
+// Crash Sensor / Button
+#define crashSensor 7
 
 void setup() {
   // put your setup code here, to run once:
@@ -24,69 +45,75 @@ void setup() {
     while (1)
       ;
   }
+
+  // Real Time Clock (RTC)
+  rtc.begin(DateTime(F(__DATE__), F(__TIME__)));
+  Serial.println("initialization done.");
+  logEvent("System Initialisation...");
 }
+
 
 void loop() {
   // put your main code here, to run repeatedly:
-temperatureControl();
-delay(250);
-light();
-delay(250);
-doorbell();
-delay(250);
-eventLogger();
-delay(250);
-doorLocker();
-delay(250);
-security();
+  temperatureControl();
+  delay(250);
+  light();
+  delay(250);
+  doorbell();
+  delay(250);
+  eventLogger();
+  delay(250);
+  doorLocker();
+  delay(250);
+  security();
 }
 /*
-controls the temperature in the house
-@params none
-@return none
- */
-void temperatureControl(){ //air conditioning basically
-
-
-}
-/*
- controls the light in the house
- @params none
- @return none 
+  controls the temperature in the house
+  @params none
+  @return none
 */
-void light(){
-  
-  }
-  /*
-   doorbell (ringing noise when crash button pressed)
-   @params none 
-   @return none
-   */
-void doorbell(){
-  
-  }
-  /*
-   logs all events that happen
-   @params none
-   @return none
-   */
-void eventLogger(){
-  
-  }
+void temperatureControl() { //air conditioning basically
+
+
+}
+/*
+  controls the light in the house
+  @params none
+  @return none
+*/
+void light() {
+
+}
+/*
+  doorbell (ringing noise when crash button pressed)
+  @params none
+  @return none
+*/
+void doorbell() {
+
+}
+/*
+  logs all events that happen
+  @params none
+  @return none
+*/
+void eventLogger() {
+
+}
 
 /*
   locks the door when certain distance reached (unless turned off)
   @params none
   @return none
- */
- void doorLocker(){
-  
-  }
-  /*
-   sees if anyone is in the house when they aren't meant to be
-   @params none
-   @return none
-   */
-   void security(){
-    
-    }
+*/
+void doorLocker() {
+
+}
+/*
+  sees if anyone is in the house when they aren't meant to be
+  @params none
+  @return none
+*/
+void security() {
+
+}
