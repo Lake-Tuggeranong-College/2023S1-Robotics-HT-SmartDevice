@@ -57,13 +57,11 @@ void loop() {
   // put your main code here, to run repeatedly:
   temperatureControl();
   delay(250);
-  light();
+  lightControl();
   delay(250);
   doorbell();
   delay(250);
-  eventLogger();
-  delay(250);
-  doorLocker();
+  doorControl();
   delay(250);
   security();
 }
@@ -72,8 +70,10 @@ void loop() {
   @params none
   @return none
 */
-void temperatureControl() { //air conditioning basically
-
+void temperatureControl() { /*air conditioning*/
+int speedValue = 255; // Can be 0-255.
+digitalWrite(M1,HIGH);
+analogWrite(E1, speedValue);   //PWM Speed Control
 
 }
 /*
@@ -81,8 +81,12 @@ void temperatureControl() { //air conditioning basically
   @params none
   @return none
 */
-void light() {
-
+void lightControl() {
+int pirSensorValue = digitalRead(pirSensor);
+if (pirSensorValue == HIGH){
+digitalWrite(ledRed, HIGH);
+}else{
+digitalWrite(ledRed, LOW);
 }
 /*
   doorbell (ringing noise when crash button pressed)
@@ -90,15 +94,10 @@ void light() {
   @return none
 */
 void doorbell() {
-
-}
-/*
-  logs all events that happen
-  @params none
-  @return none
-*/
-void eventLogger() {
-
+int crashSensorValue = digitalRead(crashSensor);
+tone(piezoPin, 1000); // Send 1KHz sound signal...
+delay(100);
+noTone(piezoPin);
 }
 
 /*
@@ -106,8 +105,20 @@ void eventLogger() {
   @params none
   @return none
 */
-void doorLocker() {
-
+void doorControl() {
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+// Sets the trigPin HIGH (ACTIVE) for 10 microseconds
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
+// Reads the echoPin, returns the sound wave travel time in microseconds
+long duration = pulseIn(echoPin, HIGH);
+// Calculating the distance
+int distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+// Servo position values range from 0-180
+int servoPos = 100;
+myservo.write(servoPos);
 }
 /*
   sees if anyone is in the house when they aren't meant to be
