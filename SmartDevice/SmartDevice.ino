@@ -37,7 +37,7 @@ void setup() {
   while (!Serial) {
     delay(1);  // wait for serial port to connect. Needed for native USB port only
   }
-
+/*
   // SD Card initialisation
   Serial.print("Initializing SD card...");
   if (!SD.begin(SDpin)) {
@@ -45,7 +45,7 @@ void setup() {
     while (1)
       ;
   }
-
+*/
   // Real Time Clock (RTC)
   rtc.begin(DateTime(F(__DATE__), F(__TIME__)));
   Serial.println("initialization done.");
@@ -62,8 +62,6 @@ void loop() {
   doorbell();
   delay(250);
   doorControl();
-  delay(250);
-  security();
 }
 /*
   controls the temperature in the house
@@ -71,9 +69,13 @@ void loop() {
   @return none
 */
 void temperatureControl() { /*air conditioning*/
-int speedValue = 255; // Can be 0-255.
-digitalWrite(M1,HIGH);
-analogWrite(E1, speedValue);   //PWM Speed Control
+  int pirValue = digitalRead(pirSensor);
+  digitalWrite(pirValue);
+  if (pirValue == HIGH)
+    int speedValue = 255; // Can be 0-255.
+  digitalWrite(M1, HIGH);
+  analogWrite(E1, speedValue);   //PWM Speed Control
+
 
 }
 /*
@@ -81,12 +83,14 @@ analogWrite(E1, speedValue);   //PWM Speed Control
   @params none
   @return none
 */
-void lightControl() {
-int pirSensorValue = digitalRead(pirSensor);
-if (pirSensorValue == HIGH){
-digitalWrite(ledRed, HIGH);
-}else{
-digitalWrite(ledRed, LOW);
+void lightControl
+int lineSensorValue = digitalRead(lineSensorPin);
+if (lineSensorValue == HIGH) {
+  int potValue = analogRead(pot);// reads the value of the potentiometer (value between 0 and 1023)
+}
+digitalWrite(ledYellow, HIGH);
+} else {
+  digitalWrite(ledYellow, LOW);
 }
 /*
   doorbell (ringing noise when crash button pressed)
@@ -94,10 +98,10 @@ digitalWrite(ledRed, LOW);
   @return none
 */
 void doorbell() {
-int crashSensorValue = digitalRead(crashSensor);
-tone(piezoPin, 1000); // Send 1KHz sound signal...
-delay(100);
-noTone(piezoPin);
+  int crashSensorValue = digitalRead(crashSensor);
+  tone(piezoPin, 1000); // Send 1KHz sound signal...
+  delay(100);
+  noTone(piezoPin);
 }
 
 /*
@@ -106,25 +110,17 @@ noTone(piezoPin);
   @return none
 */
 void doorControl() {
-digitalWrite(trigPin, LOW);
-delayMicroseconds(2);
-// Sets the trigPin HIGH (ACTIVE) for 10 microseconds
-digitalWrite(trigPin, HIGH);
-delayMicroseconds(10);
-digitalWrite(trigPin, LOW);
-// Reads the echoPin, returns the sound wave travel time in microseconds
-long duration = pulseIn(echoPin, HIGH);
-// Calculating the distance
-int distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
-// Servo position values range from 0-180
-int servoPos = 100;
-myservo.write(servoPos);
-}
-/*
-  sees if anyone is in the house when they aren't meant to be
-  @params none
-  @return none
-*/
-void security() {
-
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+  long duration = pulseIn(echoPin, HIGH);
+  // Calculating the distance
+  int distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+  // Servo position values range from 0-180
+  int servoPos = 100;
+  myservo.write(servoPos);
 }

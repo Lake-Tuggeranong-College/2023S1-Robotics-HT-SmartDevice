@@ -4,7 +4,7 @@ void logEvent(String dataToLog) {
   */
   // Get the updated/current time
   DateTime rightNow = rtc.now();
-
+/*
   // Open the log file
   File logFile = SD.open("events.csv", FILE_WRITE);
   if (!logFile) {
@@ -30,6 +30,7 @@ void logEvent(String dataToLog) {
   // End the line with a return character.
   logFile.println();
   logFile.close();
+  */
   Serial.print("Event Logged: ");
   Serial.print(rightNow.year(), DEC);
   Serial.print(",");
