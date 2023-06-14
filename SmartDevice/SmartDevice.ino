@@ -7,6 +7,8 @@
 RTC_Millis rtc;     // Software Real Time Clock (RTC)
 DateTime rightNow;  // used to store the current time.
 
+// Servo
+  myservo.attach(9);  // attaches the servo on pin 9 to the servo object
 // SD Card - Confirm Pin
 #define SDpin 10
 // Traffic Lights - LED Outputs
@@ -66,7 +68,7 @@ void loop() {
 /*
   controls the temperature in the house
   @params none
-  @return none
+  @return pirValue
 */
 void temperatureControl() { /*air conditioning*/
   int pirValue = digitalRead(pirSensor);
@@ -75,13 +77,18 @@ void temperatureControl() { /*air conditioning*/
     int speedValue = 255; // Can be 0-255.
   digitalWrite(M1, HIGH);
   analogWrite(E1, speedValue);   //PWM Speed Control
-
-
+/*
+ read pirValue
+ if true
+ output to Servo motor(pin 9)
+ else
+ output notone to pin 9
+ */
 }
 /*
   controls the light in the house
   @params none
-  @return none
+  @return lineSensorValue
 */
 void lightControl
 int lineSensorValue = digitalRead(lineSensorPin);
@@ -91,18 +98,34 @@ if (lineSensorValue == HIGH) {
 digitalWrite(ledYellow, HIGH);
 } else {
   digitalWrite(ledYellow, LOW);
+  /*
+   read lineSensorValue
+   if true
+   output to ledYellow(pin A1)
+   else
+   output notone to A1
+   
+   */
 }
 /*
   doorbell (ringing noise when crash button pressed)
   @params none
-  @return none
+  @return crashSensorValue
 */
 void doorbell() {
   int crashSensorValue = digitalRead(crashSensor);
   tone(piezoPin, 1000); // Send 1KHz sound signal...
   delay(100);
   noTone(piezoPin);
+  /*
+   read crash sensor value
+   if true
+   output to piezo(pin 3)
+   else
+   output notone to pin 3
+   */
 }
+
 
 /*
   locks the door when certain distance reached (unless turned off)
@@ -123,4 +146,11 @@ void doorControl() {
   // Servo position values range from 0-180
   int servoPos = 100;
   myservo.write(servoPos);
+  /*
+   read SonarSensor Value
+   if true
+   output to DC motor(pin 6)
+   else
+   output notone to pin 6
+   */
 }
